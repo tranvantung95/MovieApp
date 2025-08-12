@@ -1,0 +1,176 @@
+# Kotlin Multiplatform Mobile (KMM) .gitignore
+
+# Gradle files
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Android Studio generated files and folders
+*.iml
+.idea/
+.DS_Store
+build
+captures
+.externalNativeBuild
+.cxx
+*.apk
+output.json
+
+# IntelliJ
+out/
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Keystore files
+*.jks
+*.keystore
+
+# Google Services (e.g. APIs or Firebase)
+google-services.json
+
+# Android Profiling
+*.hprof
+
+# iOS files
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+*.xcworkspace/*
+!*.xcworkspace/contents.xcworkspacedata
+!*.xcworkspace/xcshareddata/
+
+# Xcode
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# CocoaPods
+iosApp/Pods/
+Podfile.lock
+
+# Swift Package Manager
+.swiftpm/
+Package.resolved
+
+# Kotlin/Native
+.konan/
+
+# Kotlin Multiplatform
+kotlin-js-store/
+node_modules/
+
+# Environment variables
+.env
+.env.local
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# JetBrains IDEs
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Visual Studio Code
+.vscode/
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Test results
+test-results/
+reports/
+
+# Lint
+lint-results.xml
+
+# Firebase
+firebase-debug.log
+.firebase/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Cache directories
+.cache/
+*.cache
+
+# Compiled Kotlin Metadata
+*.kotlin_metadata
+.kotlin/metadata/
+
+*.kib
+**/*.kib
+
+
+# Additional Android Studio files for KMM
+.idea/workspace.xml
+.idea/libraries/
+.idea/gradle.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/runConfigurations.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/copyright/
+.idea/encodings.xml
+.idea/scopes/
+.idea/deploymentTargetDropDown.xml
+.idea/render.experimental.xml

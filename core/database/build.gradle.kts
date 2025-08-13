@@ -49,10 +49,10 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                implementation(libs.androidx.sqlite.bundled)
+                implementation(libs.androidx.room.runtime)
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.koin.core)
-                implementation(libs.delight.runtime)
-                implementation(libs.delight.coroutines)
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.kotlinx.coroutines.core)
             }

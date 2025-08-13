@@ -1,9 +1,6 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
-    alias(libs.plugins.moko)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
 }
 
 kotlin {
@@ -12,7 +9,7 @@ kotlin {
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
-        namespace = "com.example.share.core.resource"
+        namespace = "com.example.share.core.domain"
         compileSdk = 35
         minSdk = 24
 
@@ -39,9 +36,8 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "resource"
-            export(libs.moko.resources)
-            export(libs.moko.resources.compose)
+            baseName = "network"
+            isStatic = true
         }
     }
     // Source set declarations.
@@ -52,11 +48,8 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-                implementation(compose.components.resources)
-                api(libs.moko.resources)
-                api(libs.moko.resources.compose)
-                api(libs.compose.material3)
+                implementation(libs.kotlin.stdlib)
+                implementation(libs.koin.core)
             }
         }
 
@@ -68,8 +61,7 @@ kotlin {
 
         androidMain {
             dependencies {
-                implementation(libs.ktor.client.android)
-                implementation(libs.ktor.client.okhttp)
+
             }
         }
 
@@ -83,18 +75,9 @@ kotlin {
 
         iosMain {
             dependencies {
-                implementation(libs.ktor.client.darwin)
+
             }
         }
-    }
-
-
-    multiplatformResources {
-        resourcesPackage.set("com.example.share.core.resource") // required
-        resourcesClassName.set("SharedRes") // optional, default MR
-        iosBaseLocalizationRegion.set("en") // optional, default "en"
-        iosMinimalDeploymentTarget.set("11.0") // optional, default "9.0"
-
     }
 
 }

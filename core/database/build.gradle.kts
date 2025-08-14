@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
+    kotlin("plugin.serialization") version "2.2.0"
+
 }
 
 kotlin {
@@ -41,6 +43,7 @@ kotlin {
             isStatic = true
         }
     }
+    // no offer a ma reject cmnr.
     // Source set declarations.
     // Declaring a target automatically creates a source set with the same name. By default, the
     // Kotlin Gradle Plugin creates additional source sets that depend on each other, since it is
@@ -54,6 +57,7 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.datetime)
+                implementation(libs.kotlinx.serialization.json)
                 implementation(libs.kotlinx.coroutines.core)
             }
         }

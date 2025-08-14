@@ -1,9 +1,6 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.androidx.room)
-    kotlin("plugin.serialization") version "2.2.0"
 }
 
 kotlin {
@@ -12,7 +9,7 @@ kotlin {
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
-        namespace = "com.example.share.core.data"
+        namespace = "com.example.share.feature.movie.domain"
         compileSdk = 35
         minSdk = 24
 
@@ -39,7 +36,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "data"
+            baseName = "network"
             isStatic = true
         }
     }
@@ -51,12 +48,10 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(projects.core.database)
-                api(projects.core.network)
-                api(projects.core.domain)
+                implementation(projects.core.domain)
                 implementation(libs.kotlin.stdlib)
-                implementation(libs.kotlinx.serialization.json)
-                implementation(libs.androidx.sqlite.bundled)
+                implementation(libs.koin.core)
+                implementation(libs.kotlinx.coroutines.core)
             }
         }
 
@@ -68,9 +63,7 @@ kotlin {
 
         androidMain {
             dependencies {
-                // Add Android-specific dependencies here. Note that this source set depends on
-                // commonMain by default and will correctly pull the Android artifacts of any KMP
-                // dependencies declared in commonMain.
+
             }
         }
 
@@ -84,22 +77,9 @@ kotlin {
 
         iosMain {
             dependencies {
-                // Add iOS-specific dependencies here. This a source set created by Kotlin Gradle
-                // Plugin (KGP) that each specific iOS target (e.g., iosX64) depends on as
-                // part of KMP’s default source set hierarchy. Note that this source set depends
-                // on common by default and will correctly pull the iOS artifacts of any
-                // KMP dependencies declared in commonMain.
+
             }
         }
     }
-}
-dependencies{
-    add("kspAndroid", libs.androidx.room.compiler)
-    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
-    add("kspIosX64", libs.androidx.room.compiler)
-    add("kspIosArm64", libs.androidx.room.compiler)
-}
 
-room {
-    schemaDirectory("$projectDir/schemas")
 }

@@ -5,6 +5,7 @@ compose = "1.8.3"
 compose-material3 = "1.1.2"
 androidx-activityCompose = "1.8.0"
 compose-multiplatform = "1.8.1"
+kotlinxSerializationJson = "1.9.0"
 navigationCompose = "2.9.0-beta02"
 androidx-lifecycle = "2.9.0"
 coil = "2.4.0"
@@ -40,6 +41,7 @@ jetbrains-compose-material3 = { module = "org.jetbrains.compose.material3:materi
 
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }

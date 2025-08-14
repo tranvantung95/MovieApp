@@ -68,6 +68,7 @@ kotlin {
             dependencies {
                 implementation(libs.ktor.client.android)
                 implementation(libs.ktor.client.okhttp)
+                implementation(libs.koin.android)
             }
         }
 

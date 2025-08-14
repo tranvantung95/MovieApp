@@ -31,15 +31,21 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation(projects.core.data)
+            implementation(projects.core.domain)
+            implementation(projects.core.network)
+            implementation(projects.core.database)
+            implementation(projects.feature.movie.data)
+            implementation(projects.feature.movie.domain)
             implementation(libs.androidx.room.runtime)
-
+            implementation(libs.koin.core)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
     }
 }
-dependencies{
+dependencies {
     add("kspAndroid", libs.androidx.room.compiler)
     add("kspIosSimulatorArm64", libs.androidx.room.compiler)
     add("kspIosX64", libs.androidx.room.compiler)

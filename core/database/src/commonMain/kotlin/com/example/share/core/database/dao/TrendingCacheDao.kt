@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TrendingCacheDao {
     @Query("SELECT * FROM trending_cache WHERE id = 'trending_today'")
-    suspend fun getTrendingCache(): Flow<TrendingCacheEntity?>
+    fun getTrendingCache(): Flow<TrendingCacheEntity?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTrendingCache(cache: TrendingCacheEntity)

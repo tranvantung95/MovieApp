@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.androidx.room)
+    //alias(libs.plugins.androidx.room)
     alias(libs.plugins.ksp)
 }
 
@@ -36,7 +36,7 @@ kotlin {
             implementation(projects.core.network)
             implementation(projects.core.database)
             implementation(projects.feature.movie.data)
-            implementation(projects.feature.movie.domain)
+            api(projects.feature.movie.domain)
             implementation(libs.androidx.room.runtime)
             implementation(libs.koin.core)
         }
@@ -45,16 +45,16 @@ kotlin {
         }
     }
 }
-dependencies {
-    add("kspAndroid", libs.androidx.room.compiler)
-    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
-    add("kspIosX64", libs.androidx.room.compiler)
-    add("kspIosArm64", libs.androidx.room.compiler)
-}
-
-room {
-    schemaDirectory("$projectDir/schemas")
-}
+//dependencies {
+//    add("kspAndroid", libs.androidx.room.compiler)
+//    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
+//    add("kspIosX64", libs.androidx.room.compiler)
+//    add("kspIosArm64", libs.androidx.room.compiler)
+//}
+//
+//room {
+//    schemaDirectory("$projectDir/schemas")
+//}
 
 android {
     namespace = "com.example.movieapp"

@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.androidx.room)
     kotlin("plugin.serialization") version "2.2.0"
 }
 
@@ -54,9 +53,11 @@ kotlin {
                 api(projects.core.database)
                 api(projects.core.network)
                 api(projects.core.domain)
+                api(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlin.stdlib)
-                implementation(libs.kotlinx.serialization.json)
-                implementation(libs.androidx.sqlite.bundled)
+                api(libs.kotlinx.datetime)
+                api(libs.kotlinx.serialization.json)
+
             }
         }
 
@@ -92,14 +93,4 @@ kotlin {
             }
         }
     }
-}
-dependencies{
-    add("kspAndroid", libs.androidx.room.compiler)
-    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
-    add("kspIosX64", libs.androidx.room.compiler)
-    add("kspIosArm64", libs.androidx.room.compiler)
-}
-
-room {
-    schemaDirectory("$projectDir/schemas")
 }

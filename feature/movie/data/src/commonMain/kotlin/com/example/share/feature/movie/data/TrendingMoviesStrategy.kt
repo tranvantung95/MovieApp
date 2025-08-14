@@ -3,6 +3,8 @@ package com.example.share.feature.movie.data
 import com.example.share.core.data.CacheDuration
 import com.example.share.core.data.CacheStrategy
 import com.example.share.core.database.MovieDatabase
+import com.example.share.core.database.dao.MovieDao
+import com.example.share.core.database.dao.TrendingCacheDao
 import com.example.share.core.database.entity.TrendingCacheEntity
 import com.example.share.core.network.ApiClient
 import com.example.share.feature.movie.data.dto.TrendingMoviesResponse
@@ -11,12 +13,13 @@ import com.example.share.feature.movie.data.mapper.MovieEntityMapper
 import io.ktor.client.call.body
 
 class TrendingMoviesStrategy(
-    private val database: MovieDatabase,
     private val apiClient: ApiClient,
     private val movieEntityMapper: MovieEntityMapper,
+    private val movieDao: MovieDao,
+    private val trendingCacheDao: TrendingCacheDao
 ) : CacheStrategy<TrendingMoviesResponse> {
     override suspend fun getCacheTime(): Long? {
-        return database.trendingCacheDao().getTrendingCacheTime()
+        return trendingCacheDao.getTrendingCacheTime()
     }
 
     override suspend fun isExpired(cacheTime: Long?): Boolean {
@@ -24,7 +27,7 @@ class TrendingMoviesStrategy(
     }
 
     override suspend fun fetchFromApi(): TrendingMoviesResponse {
-        val response = apiClient.getData("").body<TrendingMoviesResponse>()
+        val response = apiClient.getData("/trending-movies").body<TrendingMoviesResponse>()
         return TrendingMoviesResponse(
             results = response.results,
             page = response.page,
@@ -37,7 +40,7 @@ class TrendingMoviesStrategy(
         val movieEntity = data.results.map { movie ->
             movieEntityMapper.mapToEntity(movie)
         }
-        database.movieDao().insertMovies(movieEntity)
+        movieDao.insertMovies(movieEntity)
         val movieIds = data.results.joinToString(",") { it.id.toString() }
         val trendingCacheEntity = TrendingCacheEntity(
             movieIds = movieIds,
@@ -45,7 +48,7 @@ class TrendingMoviesStrategy(
             totalPages = data.totalPages,
             totalResults = data.totalResults
         )
-        database.trendingCacheDao().insertTrendingCache(trendingCacheEntity)
+        trendingCacheDao.insertTrendingCache(trendingCacheEntity)
     }
 
 }

@@ -1,11 +1,11 @@
 package com.example.share.feature.movie.data.mapper
 
+import com.example.share.core.data.json
 import com.example.share.core.database.entity.GenreEntity
 import com.example.share.core.database.entity.MovieDetailEntity
 import com.example.share.core.database.entity.ProductionCompanyEntity
 import com.example.share.core.database.entity.ProductionCountryEntity
 import com.example.share.core.database.entity.SpokenLanguageEntity
-import com.example.share.core.database.json
 import com.example.share.feature.movie.data.dto.MovieDetailDTO
 import kotlinx.datetime.Clock
 

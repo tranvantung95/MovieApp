@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
+    kotlin("plugin.serialization") version "2.2.0"
 }
 
 kotlin {
@@ -51,6 +52,7 @@ kotlin {
                 implementation(projects.feature.movie.domain)
                 implementation(projects.core.data)
                 implementation(libs.kotlin.stdlib)
+                implementation(libs.kotlinx.serialization.json)
                 implementation(libs.koin.core)
             }
         }

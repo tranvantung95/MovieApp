@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MovieDetailDao {
     @Query("SELECT * FROM movie_details WHERE id = :movieId")
-    suspend fun getMovieDetailById(movieId: Int): Flow<MovieDetailEntity?>
+     fun getMovieDetailById(movieId: Int): Flow<MovieDetailEntity?>
 
     @Transaction
     @Query("SELECT * FROM movie_details WHERE id = :movieId")
@@ -29,4 +29,5 @@ interface MovieDetailDao {
 
     @Query("SELECT created_at FROM movie_details WHERE id = :movieId")
     suspend fun getMovieDetailCacheTime(movieId: Int): Long?
+
 }

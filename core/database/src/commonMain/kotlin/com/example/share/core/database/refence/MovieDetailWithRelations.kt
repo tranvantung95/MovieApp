@@ -13,26 +13,45 @@ data class MovieDetailWithRelations(
     @Embedded val movieDetail: MovieDetailEntity,
     @Relation(
         parentColumn = "id",
-        entityColumn = "genreId",
-        associateBy = Junction(MovieDetailGenreCrossRef::class)
+        entityColumn = "id", // This refers to the junction table column
+        associateBy = Junction(
+            MovieDetailGenreCrossRef::class,
+            parentColumn = "movieId",    // Junction column that matches parent
+            entityColumn = "genreId"     // Junction column that matches child entity
+        )
     )
     val genres: List<GenreEntity>,
+
     @Relation(
         parentColumn = "id",
-        entityColumn = "companyId",
-        associateBy = Junction(MovieDetailProductionCompanyCrossRef::class)
+        entityColumn = "id", // This refers to the junction table column
+        associateBy = Junction(
+            MovieDetailProductionCompanyCrossRef::class,
+            parentColumn = "movieId",
+            entityColumn = "companyId"
+        )
     )
     val productionCompanies: List<ProductionCompanyEntity>,
+
     @Relation(
         parentColumn = "id",
-        entityColumn = "countryIso",
-        associateBy = Junction(MovieDetailProductionCountryCrossRef::class)
+        entityColumn = "iso31661", // This refers to the junction table column
+        associateBy = Junction(
+            MovieDetailProductionCountryCrossRef::class,
+            parentColumn = "movieId",
+            entityColumn = "countryIso"
+        )
     )
     val productionCountries: List<ProductionCountryEntity>,
+
     @Relation(
         parentColumn = "id",
-        entityColumn = "languageIso",
-        associateBy = Junction(MovieDetailSpokenLanguageCrossRef::class)
+        entityColumn = "iso6391", // This refers to the junction table column
+        associateBy = Junction(
+            MovieDetailSpokenLanguageCrossRef::class,
+            parentColumn = "movieId",
+            entityColumn = "languageIso"
+        )
     )
     val spokenLanguages: List<SpokenLanguageEntity>
 )

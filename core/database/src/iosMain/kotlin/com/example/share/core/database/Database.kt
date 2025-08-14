@@ -2,7 +2,6 @@ package com.example.share.core.database
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.RoomDatabaseConstructor
 import kotlinx.cinterop.ExperimentalForeignApi
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -10,12 +9,6 @@ import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDomainMask
 
-@Suppress("KotlinNoActualForExpect")
-actual class AppDatabaseConstructor : RoomDatabaseConstructor<MovieDatabase> {
-    actual override fun initialize(): MovieDatabase {
-        return getDatabaseBuilder().build()
-    }
-}
 
 fun getDatabaseBuilder(): RoomDatabase.Builder<MovieDatabase> {
     val dbFilePath = documentDirectory() + "/movie.db"

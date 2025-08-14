@@ -3,7 +3,11 @@ package com.example.share.core.data
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
 
+val json = Json {
+    ignoreUnknownKeys = true
+}
 class CacheManager(private val scope: CoroutineScope) {
     private val refreshJobs = mutableMapOf<String, Job>()
 

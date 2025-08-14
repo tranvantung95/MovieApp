@@ -1,7 +1,9 @@
 package com.example.share.core.database.di
 
 import com.example.share.core.database.AppDatabaseConstructor
+import com.example.share.core.database.DatabaseTransactionExecutor
 import com.example.share.core.database.MovieDatabase
+import com.example.share.core.database.RoomTransactionExecutor
 import com.example.share.core.database.dao.GenreDao
 import com.example.share.core.database.dao.MovieDao
 import com.example.share.core.database.dao.MovieDetailCrossRefDao
@@ -14,7 +16,7 @@ import com.example.share.core.database.dao.TrendingCacheDao
 import com.example.share.core.database.platformModule
 import org.koin.dsl.module
 
- internal val databaseModule = module {
+internal val databaseModule = module {
     single<MovieDatabase> {
         val constructor = get<AppDatabaseConstructor>()
         constructor.initialize()
@@ -28,6 +30,9 @@ import org.koin.dsl.module
     single<MovieDetailCrossRefDao> { get<MovieDatabase>().movieDetailCrossRefDao() }
     single<TrendingCacheDao> { get<MovieDatabase>().trendingCacheDao() }
     single<SearchCacheDao> { get<MovieDatabase>().searchCacheDao() }
+    single<DatabaseTransactionExecutor> {
+        RoomTransactionExecutor(get())
+    }
 }
 val coreDatabaseModule = module {
     includes(databaseModule, platformModule())

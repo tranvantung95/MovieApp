@@ -61,12 +61,10 @@ abstract class MovieDatabase : RoomDatabase() {
     abstract fun movieDetailCrossRefDao(): MovieDetailCrossRefDao
     abstract fun trendingCacheDao(): TrendingCacheDao
     abstract fun searchCacheDao(): SearchCacheDao
-
-
 }
 
 @Suppress("KotlinNoActualForExpect")
-expect class AppDatabaseConstructor : RoomDatabaseConstructor<MovieDatabase> {
+expect object AppDatabaseConstructor : RoomDatabaseConstructor<MovieDatabase> {
     override fun initialize(): MovieDatabase
 
 }

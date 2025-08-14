@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
@@ -21,6 +23,7 @@ kotlin {
         }.configure {
             instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
+
     }
 
     // For iOS targets, this is also where you should
@@ -48,6 +51,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.client.logging.jvm)
@@ -66,9 +70,9 @@ kotlin {
 
         androidMain {
             dependencies {
-                implementation(libs.ktor.client.android)
-                implementation(libs.ktor.client.okhttp)
-                implementation(libs.koin.android)
+                api(libs.ktor.client.android)
+                api(libs.ktor.client.okhttp)
+                api(libs.koin.android)
             }
         }
 
@@ -82,9 +86,24 @@ kotlin {
 
         iosMain {
             dependencies {
-                implementation(libs.ktor.client.darwin)
+                api(libs.ktor.client.darwin)
             }
         }
     }
-
 }
+
+//
+//fun Project.loadLocalProperty(
+//    path: String,
+//    propertyName: String,
+//): String {
+//    val localProperties = Properties()
+//    val localPropertiesFile = project.rootProject.file("local.properties")
+//    if (localPropertiesFile.exists()) {
+//        localProperties.load(localPropertiesFile.inputStream())
+//        return localProperties.getProperty(propertyName)
+//    } else {
+//        throw GradleException("can not find property : $propertyName")
+//    }
+//
+//}

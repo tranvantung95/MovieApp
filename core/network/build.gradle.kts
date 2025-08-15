@@ -1,10 +1,21 @@
-import java.util.Properties
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
+
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
+    id("com.codingfeline.buildkonfig") version "0.15.1"
 }
 
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:0.17.1")
+    }
+}
 kotlin {
 
     // Target declarations - add or remove as needed below. These define
@@ -23,7 +34,6 @@ kotlin {
         }.configure {
             instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
-
     }
 
     // For iOS targets, this is also where you should
@@ -91,19 +101,17 @@ kotlin {
         }
     }
 }
+buildkonfig {
+    packageName = "com.example.share.core.network"
 
-//
-//fun Project.loadLocalProperty(
-//    path: String,
-//    propertyName: String,
-//): String {
-//    val localProperties = Properties()
-//    val localPropertiesFile = project.rootProject.file("local.properties")
-//    if (localPropertiesFile.exists()) {
-//        localProperties.load(localPropertiesFile.inputStream())
-//        return localProperties.getProperty(propertyName)
-//    } else {
-//        throw GradleException("can not find property : $propertyName")
-//    }
-//
-//}
+    defaultConfigs {
+        val apiKey: String = gradleLocalProperties(
+            projectRootDir = rootDir, providers = providers
+        ).getProperty("API_KEY")
+        require(apiKey.isNotEmpty()) {
+            "Register your api key from developer and place it in local.properties as `API_KEY`"
+        }
+
+        buildConfigField(STRING, "API_KEY", apiKey)
+    }
+}

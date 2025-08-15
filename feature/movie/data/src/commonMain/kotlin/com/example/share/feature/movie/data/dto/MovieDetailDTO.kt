@@ -2,7 +2,9 @@ package com.example.share.feature.movie.data.dto
 
 import com.example.share.core.data.DTOModel
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class MovieDetailDTO(
     val id: Int,
     val title: String,

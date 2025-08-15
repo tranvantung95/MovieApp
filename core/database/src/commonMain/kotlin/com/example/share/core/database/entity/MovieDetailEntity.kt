@@ -41,6 +41,4 @@ data class MovieDetailEntity(
     @ColumnInfo(name = "created_at")
     val createdAt: Long = kotlinx.datetime.Clock.System.now().epochSeconds,
     val lastUpdated: Long
-)  : EntityModel{
-
-}
+)  : EntityModel

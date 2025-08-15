@@ -1,5 +1,7 @@
 package com.example.share.feature.movie.data.di
 
+import com.example.share.feature.movie.data.mapper.MovieDTOToDomainModel
+import com.example.share.feature.movie.data.mapper.MovieDetailDomainMapper
 import com.example.share.feature.movie.data.mapper.MovieDetailEntityMapper
 import com.example.share.feature.movie.data.mapper.MovieEntityMapper
 import com.example.share.feature.movie.data.mapper.MovieMapper
@@ -14,5 +16,11 @@ internal val mapperModule = module {
     }
     factory {
         MovieEntityMapper()
+    }
+    factory {
+        MovieDTOToDomainModel()
+    }
+    factory {
+        MovieDetailDomainMapper()
     }
 }

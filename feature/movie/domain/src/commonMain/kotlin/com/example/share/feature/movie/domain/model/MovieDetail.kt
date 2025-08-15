@@ -1,5 +1,7 @@
 package com.example.share.feature.movie.domain.model
 
+import com.example.share.core.domain.DomainModel
+
 data class MovieDetail(
     val adult: Boolean,
     val backdropPath: String?,
@@ -27,5 +29,4 @@ data class MovieDetail(
     val video: Boolean,
     val voteAverage: Double,
     val voteCount: Int
-) {
-}
+): DomainModel

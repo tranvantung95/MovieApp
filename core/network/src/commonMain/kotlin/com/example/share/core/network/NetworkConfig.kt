@@ -1,6 +1,6 @@
 package com.example.share.core.network
 
 object NetworkConfig {
-    const val BASE_URL = "https://developer.themoviedb.org/reference"
+    const val HOST = "api.themoviedb.org"
     const val TIMEOUT_MILLIS = 30000L
 }

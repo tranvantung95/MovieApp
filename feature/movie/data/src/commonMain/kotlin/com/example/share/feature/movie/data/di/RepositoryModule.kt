@@ -1,5 +1,8 @@
 package com.example.share.feature.movie.data.di
 
+import com.example.share.core.data.CacheManager
+import com.example.share.feature.movie.data.MovieDetailStrategyFactory
+import com.example.share.feature.movie.data.MovieDetailStrategyFactoryImpl
 import com.example.share.feature.movie.data.MovieRepositoryImpl
 import com.example.share.feature.movie.data.TrendingMoviesStrategy
 import com.example.share.feature.movie.domain.MovieGateway
@@ -16,9 +19,27 @@ val movieRepositoryModule = module {
         CoroutineScope(SupervisorJob() + Dispatchers.IO + CoroutineName("MovieRepository"))
     }
     single<MovieGateway> {
-        MovieRepositoryImpl(get(), get(), get(named("repositoryScope")), get(), get(), get())
+        MovieRepositoryImpl(
+            get(), get(), get(), get(), get(), get(), get(), get(), get()
+        )
+    }
+    single {
+        CacheManager()
     }
     factory {
         TrendingMoviesStrategy(get(), get(), get(), get())
+    }
+    factory<MovieDetailStrategyFactory> {
+        MovieDetailStrategyFactoryImpl(
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+        )
     }
 }

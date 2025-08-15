@@ -1,8 +1,10 @@
 package com.example.share.core.database.refence
 
 import androidx.room.Embedded
+import androidx.room.Entity
 import androidx.room.Junction
 import androidx.room.Relation
+import com.example.share.core.database.EntityModel
 import com.example.share.core.database.entity.GenreEntity
 import com.example.share.core.database.entity.MovieDetailEntity
 import com.example.share.core.database.entity.ProductionCompanyEntity
@@ -54,4 +56,4 @@ data class MovieDetailWithRelations(
         )
     )
     val spokenLanguages: List<SpokenLanguageEntity>
-)
+) : EntityModel

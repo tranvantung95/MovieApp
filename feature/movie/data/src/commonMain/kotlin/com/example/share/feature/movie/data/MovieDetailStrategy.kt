@@ -39,7 +39,8 @@ class MovieDetailStrategy(
     }
 
     override suspend fun fetchFromApi(): MovieDetailDTO {
-        val response = apiClient.getData("/search-movie/$movieId")
+        val response =
+            apiClient.getData("movie", movieId.toString())
         return response.body()
     }
 

@@ -2,13 +2,11 @@ package com.example.share.feature.movie.data
 
 import com.example.share.core.data.CacheDuration
 import com.example.share.core.data.CacheStrategy
-import com.example.share.core.database.MovieDatabase
 import com.example.share.core.database.dao.MovieDao
 import com.example.share.core.database.dao.TrendingCacheDao
 import com.example.share.core.database.entity.TrendingCacheEntity
 import com.example.share.core.network.ApiClient
 import com.example.share.feature.movie.data.dto.TrendingMoviesResponse
-import com.example.share.feature.movie.data.mapper.MovieDetailEntityMapper
 import com.example.share.feature.movie.data.mapper.MovieEntityMapper
 import io.ktor.client.call.body
 
@@ -25,9 +23,8 @@ class TrendingMoviesStrategy(
     override suspend fun isExpired(cacheTime: Long?): Boolean {
         return CacheDuration.isExpired(cacheTime, CacheDuration.TRENDING_MOVIES)
     }
-
     override suspend fun fetchFromApi(): TrendingMoviesResponse {
-        val response = apiClient.getData("/trending-movies").body<TrendingMoviesResponse>()
+        val response = apiClient.getData("trending", "movie","day", queryParams = mapOf("language" to "en-US")).body<TrendingMoviesResponse>()
         return TrendingMoviesResponse(
             results = response.results,
             page = response.page,

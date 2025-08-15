@@ -10,6 +10,6 @@ object CacheDuration {
     @OptIn(ExperimentalTime::class)
     fun isExpired(cacheTime: Long?, duration: Long): Boolean {
         if (cacheTime == null) return true
-        return Clock.System.now().epochSeconds.times(1000L) - cacheTime > duration
+        return Clock.System.now().epochSeconds - cacheTime > duration
     }
 }

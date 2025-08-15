@@ -1,30 +1,33 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidKotlinMultiplatformLibrary)
+    alias(libs.plugins.androidLibrary)
+ //   alias(libs.plugins.androidKotlinMultiplatformLibrary)
     alias(libs.plugins.ksp)
     kotlin("plugin.serialization") version "2.2.0"
+    id("maven-publish")
 }
 
 kotlin {
-
+    androidTarget {
+        publishLibraryVariants("release", "debug")
+    }
     // Target declarations - add or remove as needed below. These define
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
-    androidLibrary {
-        namespace = "com.example.share.core.data"
-        compileSdk = 35
-        minSdk = 24
-
-        withHostTestBuilder {
-        }
-
-        withDeviceTestBuilder {
-            sourceSetTreeName = "test"
-        }.configure {
-            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        }
-    }
-
+//    androidLibrary {
+//        namespace = "com.example.share.core.data"
+//        compileSdk = 35
+//        minSdk = 24
+//
+//        withHostTestBuilder {
+//        }
+//
+//        withDeviceTestBuilder {
+//            sourceSetTreeName = "test"
+//        }.configure {
+//            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+//        }
+//    }
     // For iOS targets, this is also where you should
     // configure native binary output. For more information, see:
     // https://kotlinlang.org/docs/multiplatform-build-native-binaries.html#build-xcframeworks
@@ -48,17 +51,14 @@ kotlin {
     // common to share sources between related targets.
     // See: https://kotlinlang.org/docs/multiplatform-hierarchy.html
     sourceSets {
-        commonMain {
-            dependencies {
-                api(projects.core.database)
-                api(projects.core.network)
-                api(projects.core.domain)
-                api(libs.kotlinx.coroutines.core)
-                implementation(libs.kotlin.stdlib)
-                api(libs.kotlinx.datetime)
-                api(libs.kotlinx.serialization.json)
-
-            }
+        commonMain.dependencies {
+            api(projects.core.database)
+            api(projects.core.network)
+            api(projects.core.domain)
+            api(libs.kotlinx.coroutines.core)
+            implementation(libs.kotlin.stdlib)
+            api(libs.kotlinx.datetime)
+            api(libs.kotlinx.serialization.json)
         }
 
         commonTest {
@@ -75,13 +75,13 @@ kotlin {
             }
         }
 
-        getByName("androidDeviceTest") {
-            dependencies {
-                implementation(libs.androidx.runner)
-                implementation(libs.androidx.core)
-                implementation(libs.androidx.junit)
-            }
-        }
+//        getByName("androidDeviceTest") {
+//            dependencies {
+//                implementation(libs.androidx.runner)
+//                implementation(libs.androidx.core)
+//                implementation(libs.androidx.junit)
+//            }
+//        }
 
         iosMain {
             dependencies {
@@ -92,5 +92,18 @@ kotlin {
                 // KMP dependencies declared in commonMain.
             }
         }
+    }
+}
+
+
+android {
+    namespace = "com.example.share.core.data"
+    compileSdk = 35
+    defaultConfig {
+        minSdk = 24
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }

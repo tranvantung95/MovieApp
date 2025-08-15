@@ -3,10 +3,17 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    //alias(libs.plugins.androidx.room)
     alias(libs.plugins.ksp)
+    id("maven-publish")
 }
 
+publishing{
+   repositories {
+       maven {
+
+       }
+   }
+}
 kotlin {
     androidTarget {
         compilations.all {
@@ -16,6 +23,7 @@ kotlin {
                 }
             }
         }
+        publishLibraryVariants("release", "debug")
     }
 
     listOf(
@@ -45,16 +53,6 @@ kotlin {
         }
     }
 }
-//dependencies {
-//    add("kspAndroid", libs.androidx.room.compiler)
-//    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
-//    add("kspIosX64", libs.androidx.room.compiler)
-//    add("kspIosArm64", libs.androidx.room.compiler)
-//}
-//
-//room {
-//    schemaDirectory("$projectDir/schemas")
-//}
 
 android {
     namespace = "com.example.movieapp"
@@ -65,5 +63,8 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlin{
+        androidTarget()
     }
 }

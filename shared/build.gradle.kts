@@ -7,13 +7,8 @@ plugins {
     id("maven-publish")
 }
 
-publishing{
-   repositories {
-       maven {
-
-       }
-   }
-}
+group = "com.example.movieapp"
+version = "1.0.1"
 kotlin {
     androidTarget {
         compilations.all {
@@ -40,7 +35,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(projects.core.data)
-            implementation(projects.core.domain)
+            api(projects.core.domain)
             implementation(projects.core.network)
             implementation(projects.core.database)
             implementation(projects.feature.movie.data)

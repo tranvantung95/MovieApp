@@ -49,10 +49,12 @@ class MovieRepositoryImpl(
         return try {
             val movie = apiClient.getData("search", "movie", queryParams = mapOf("query" to query))
                 .body<TrendingMoviesResponse>()
-            flow { Result.success(movieDomainMapper.mapToDomainList(movie.results)) }
+            flow {
+                emit(Result.success(movieDomainMapper.mapToDomainList(movie.results)))
+            }
         } catch (e: Exception) {
             flow {
-                Result.failure<List<Movie>>(e)
+                emit(Result.failure(e))
             }
         }
     }

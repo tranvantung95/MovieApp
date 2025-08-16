@@ -29,5 +29,5 @@ data class MovieDTO(
     @SerialName("genre_ids")
     val genreIds: List<Int>,
     @SerialName("media_type")
-    val mediaType: String?
+    val mediaType: String? = null
 ) : DTOModel

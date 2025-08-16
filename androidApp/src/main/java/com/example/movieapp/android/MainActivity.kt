@@ -3,11 +3,17 @@ package com.example.movieapp.android
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.movieapp.Greeting
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -15,6 +21,7 @@ import org.koin.compose.koinInject
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             MyApplicationTheme {
                 Surface(
@@ -30,8 +37,16 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun GreetingView(text: String, viewModel: TestViewModel = koinViewModel()) {
-    viewModel
-    Text(text = text)
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+    Box(Modifier
+        .fillMaxSize()
+        .clickable {
+            viewModel.onSearchQueryChanged("x")
+        }, contentAlignment = Alignment.Center) {
+        Text(
+            text = state.movieUiSize.toString(), fontSize = 20.sp
+        )
+    }
 }
 
 @Preview

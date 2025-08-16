@@ -29,7 +29,7 @@ class CacheManager {
             }
         } catch (e: Exception) {
             println("CacheManager \"Failed to refresh $key\", $e")
-            //    throw e
+            throw e
         } finally {
             refreshJobs.remove(key)
         }

@@ -38,13 +38,15 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GreetingView(text: String, viewModel: TestViewModel = koinViewModel()) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    Box(Modifier
-        .fillMaxSize()
-        .clickable {
-            viewModel.onSearchQueryChanged("x")
-        }, contentAlignment = Alignment.Center) {
+    Box(
+        Modifier
+            .fillMaxSize()
+            .clickable {
+                viewModel.onSearchQueryChanged("x")
+            }, contentAlignment = Alignment.Center
+    ) {
         Text(
-            text = state.movieUiSize.toString(), fontSize = 20.sp
+            text = "${state.movieUiSize}", fontSize = 20.sp
         )
     }
 }

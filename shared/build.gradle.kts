@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.example.movieapp"
-version = "1.0.1"
+version = "1.0.5"
 kotlin {
     androidTarget {
         compilations.all {

@@ -1,10 +1,12 @@
 package com.example.share.feature.movie.data.di
 
 import com.example.share.core.data.CacheManager
+import com.example.share.core.data.CacheStrategy
 import com.example.share.feature.movie.data.MovieDetailStrategyFactory
 import com.example.share.feature.movie.data.MovieDetailStrategyFactoryImpl
 import com.example.share.feature.movie.data.MovieRepositoryImpl
 import com.example.share.feature.movie.data.TrendingMoviesStrategy
+import com.example.share.feature.movie.data.dto.TrendingMoviesResponse
 import com.example.share.feature.movie.domain.MovieGateway
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope

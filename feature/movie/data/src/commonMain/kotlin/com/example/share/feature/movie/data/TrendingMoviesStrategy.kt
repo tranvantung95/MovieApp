@@ -10,7 +10,7 @@ import com.example.share.feature.movie.data.dto.TrendingMoviesResponse
 import com.example.share.feature.movie.data.mapper.MovieEntityMapper
 import io.ktor.client.call.body
 
-class TrendingMoviesStrategy(
+open class TrendingMoviesStrategy(
     private val apiClient: ApiClient,
     private val movieEntityMapper: MovieEntityMapper,
     private val movieDao: MovieDao,

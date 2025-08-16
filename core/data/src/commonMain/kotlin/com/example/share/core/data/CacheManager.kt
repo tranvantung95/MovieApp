@@ -9,9 +9,9 @@ val json = Json {
     ignoreUnknownKeys = true
 }
 
-class CacheManager {
+open class CacheManager {
     private val refreshJobs = mutableMapOf<String, Job>()
-    suspend fun <T> refreshIfNeeded(
+    open suspend fun <T> refreshIfNeeded(
         key: String,
         strategy: CacheStrategy<T>
     ) {

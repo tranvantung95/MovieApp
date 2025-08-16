@@ -41,7 +41,7 @@ class MovieRepositoryImpl(
     private val movieDetailEntityToDomainMapper: MovieDetailDomainMapper,
     private val movieDetailStrategyFactory: MovieDetailStrategyFactory,
 ) : MovieGateway {
-    override fun getTrendingMovies(): Flow<Result<List<Movie>>> = flow<Result<List<Movie>>> {
+    override fun getTrendingMovies(): Flow<Result<List<Movie>>> = flow {
         cacheManager.refreshIfNeeded(
             "getTrendingMovies", strategy = trendingMoviesStrategy
         )

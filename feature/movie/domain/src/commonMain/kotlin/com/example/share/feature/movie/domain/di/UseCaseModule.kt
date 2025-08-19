@@ -4,6 +4,7 @@ import com.example.share.feature.movie.domain.GetMovieDetailUseCase
 import com.example.share.feature.movie.domain.GetMovieDetailUseCaseImpl
 import com.example.share.feature.movie.domain.GetMoviesUseCase
 import com.example.share.feature.movie.domain.GetMoviesUseCaseImpl
+import com.example.share.feature.movie.domain.GetMoviesUseCaseIos
 import com.example.share.feature.movie.domain.GetTrendingMoviesUseCase
 import com.example.share.feature.movie.domain.GetTrendingMoviesUseCaseImpl
 import com.example.share.feature.movie.domain.SearchMoviesUseCase
@@ -22,5 +23,8 @@ val movieUseCaseModule = module {
     }
     factory<SearchMoviesUseCase> {
         SearchMoviesUseCaseImpl(get())
+    }
+    factory {
+        GetMoviesUseCaseIos(get())
     }
 }

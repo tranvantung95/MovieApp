@@ -8,11 +8,8 @@ import com.example.share.feature.movie.domain.di.movieUseCaseModule
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-val iosShared = module {
-    single { GetMoviesUseCaseIos(get()) }
 
-}
 
-val sharedModule = listOf(coreDatabaseModule, networkModule, movieDataModule, movieUseCaseModule, iosShared)
+val sharedModule = listOf(coreDatabaseModule, networkModule, movieDataModule, movieUseCaseModule)
 
 expect val platformModule: Module

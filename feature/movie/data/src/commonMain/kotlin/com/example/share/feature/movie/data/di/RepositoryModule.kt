@@ -1,12 +1,14 @@
 package com.example.share.feature.movie.data.di
 
-import com.example.share.core.data.CacheManager
-import com.example.share.core.data.CacheStrategy
-import com.example.share.feature.movie.data.MovieDetailStrategyFactory
-import com.example.share.feature.movie.data.MovieDetailStrategyFactoryImpl
+import com.example.share.feature.movie.data.localdatasource.MovieDetailLocalDataSource
+import com.example.share.feature.movie.data.localdatasource.MovieDetailLocalDataSourceImpl
+import com.example.share.feature.movie.data.remotedatasource.MovieDetailRemoteDataSource
+import com.example.share.feature.movie.data.remotedatasource.MovieDetailRemoteDataSourceImpl
+import com.example.share.feature.movie.data.localdatasource.MovieLocalDataSource
+import com.example.share.feature.movie.data.localdatasource.MovieLocalDataSourceImpl
+import com.example.share.feature.movie.data.remotedatasource.MovieRemoteDataSource
+import com.example.share.feature.movie.data.remotedatasource.MovieRemoteDataSourceImpl
 import com.example.share.feature.movie.data.MovieRepositoryImpl
-import com.example.share.feature.movie.data.TrendingMoviesStrategy
-import com.example.share.feature.movie.data.dto.TrendingMoviesResponse
 import com.example.share.feature.movie.domain.MovieGateway
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
@@ -22,26 +24,19 @@ val movieRepositoryModule = module {
     }
     single<MovieGateway> {
         MovieRepositoryImpl(
-            get(), get(), get(), get(), get(), get(), get(), get(), get()
+            get(), get(), get(), get(), get(), get(), get()
         )
     }
-    single {
-        CacheManager()
+    factory<MovieRemoteDataSource> {
+        MovieRemoteDataSourceImpl(get())
     }
-    factory {
-        TrendingMoviesStrategy(get(), get(), get(), get())
+    factory<MovieLocalDataSource> {
+        MovieLocalDataSourceImpl(get(), get(), get())
     }
-    factory<MovieDetailStrategyFactory> {
-        MovieDetailStrategyFactoryImpl(
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-        )
+    factory<MovieDetailRemoteDataSource> {
+        MovieDetailRemoteDataSourceImpl(get())
+    }
+    factory<MovieDetailLocalDataSource> {
+        MovieDetailLocalDataSourceImpl(get(), get(), get(), get(), get(), get(), get(), get())
     }
 }

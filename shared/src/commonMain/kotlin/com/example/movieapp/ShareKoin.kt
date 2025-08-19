@@ -5,11 +5,15 @@ import org.koin.core.context.startKoin
 import org.koin.mp.KoinPlatform
 
 object ShareKoin {
-    fun initKoin(){
+    fun initKoin() {
         startKoin {
             modules(sharedModule + platformModule)
         }
     }
+
+}
+
+object ShareUseCase {
     fun getGetMoviesUseCaseIos(): GetMoviesUseCaseIos {
         return KoinPlatform.getKoin().get()
     }

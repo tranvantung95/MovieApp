@@ -1,7 +1,5 @@
-package com.example.share.feature.movie.data
+package com.example.share.feature.movie.data.localdatasource
 
-import com.example.share.core.data.CacheDuration
-import com.example.share.core.data.CacheStrategy
 import com.example.share.core.database.DatabaseTransactionExecutor
 import com.example.share.core.database.dao.GenreDao
 import com.example.share.core.database.dao.MovieDetailCrossRefDao
@@ -13,40 +11,24 @@ import com.example.share.core.database.refence.MovieDetailGenreCrossRef
 import com.example.share.core.database.refence.MovieDetailProductionCompanyCrossRef
 import com.example.share.core.database.refence.MovieDetailProductionCountryCrossRef
 import com.example.share.core.database.refence.MovieDetailSpokenLanguageCrossRef
-import com.example.share.core.network.ApiClient
+import com.example.share.core.database.refence.MovieDetailWithRelations
 import com.example.share.feature.movie.data.dto.MovieDetailDTO
 import com.example.share.feature.movie.data.mapper.MovieDetailEntityMapper
-import io.ktor.client.call.body
+import kotlinx.coroutines.flow.Flow
 
-class MovieDetailStrategy(
-    private val movieId: Int,
-    private val apiClient: ApiClient,
-    private val movieDetailEntityMapper: MovieDetailEntityMapper,
+class MovieDetailLocalDataSourceImpl(
     private val movieDetailDao: MovieDetailDao,
+    private val transaction: DatabaseTransactionExecutor,
+    private val movieDetailEntityMapper: MovieDetailEntityMapper,
     private val genreDao: GenreDao,
     private val productionCompanyDao: ProductionCompanyDao,
     private val productionCountryDao: ProductionCountryDao,
     private val spokenLanguageDao: SpokenLanguageDao,
     private val movieDetailCrossRefDao: MovieDetailCrossRefDao,
-    private val transaction: DatabaseTransactionExecutor
-) : CacheStrategy<MovieDetailDTO> {
-    override suspend fun getCacheTime(): Long? {
-        return movieDetailDao.getMovieDetailCacheTime(movieId)
-    }
-
-    override suspend fun isExpired(cacheTime: Long?): Boolean {
-        return CacheDuration.isExpired(cacheTime, CacheDuration.MOVIE_DETAIL)
-    }
-
-    override suspend fun fetchFromApi(): MovieDetailDTO {
-        val response =
-            apiClient.getData("movie", movieId.toString())
-        return response.body()
-    }
-
-    override suspend fun saveToDatabase(data: MovieDetailDTO) {
+) : MovieDetailLocalDataSource {
+    override suspend fun saveMovieDetail(movieDetailDTO: MovieDetailDTO) {
         transaction.executeInTransaction {
-            val movieDetailEntity = movieDetailEntityMapper.apiMovieDetailToEntities(data)
+            val movieDetailEntity = movieDetailEntityMapper.apiMovieDetailToEntities(movieDetailDTO)
 
             // Insert all entities
             movieDetailDao.insertMovieDetail(movieDetailEntity.movieDetail)
@@ -62,17 +44,17 @@ class MovieDetailStrategy(
             movieDetailCrossRefDao.deleteMovieSpokenLanguages(movieDetailEntity.movieDetail.id)
 
             // Insert new relationships
-            val genreCrossRefs = data.genres.map {
+            val genreCrossRefs = movieDetailDTO.genres.map {
                 MovieDetailGenreCrossRef(movieDetailEntity.movieDetail.id, it.id)
             }
             movieDetailCrossRefDao.insertMovieGenres(genreCrossRefs)
 
-            val companyCrossRefs = data.productionCompanies.map {
+            val companyCrossRefs = movieDetailDTO.productionCompanies.map {
                 MovieDetailProductionCompanyCrossRef(movieDetailEntity.movieDetail.id, it.id)
             }
             movieDetailCrossRefDao.insertMovieProductionCompanies(companyCrossRefs)
 
-            val countryCrossRefs = data.productionCountries.map {
+            val countryCrossRefs = movieDetailDTO.productionCountries.map {
                 MovieDetailProductionCountryCrossRef(
                     movieDetailEntity.movieDetail.id,
                     it.iso31661
@@ -80,11 +62,18 @@ class MovieDetailStrategy(
             }
             movieDetailCrossRefDao.insertMovieProductionCountries(countryCrossRefs)
 
-            val languageCrossRefs = data.spokenLanguages.map {
+            val languageCrossRefs = movieDetailDTO.spokenLanguages.map {
                 MovieDetailSpokenLanguageCrossRef(movieDetailEntity.movieDetail.id, it.iso6391)
             }
             movieDetailCrossRefDao.insertMovieSpokenLanguages(languageCrossRefs)
         }
+    }
 
+    override fun getMovieDetail(movieId: Int): Flow<MovieDetailWithRelations?> {
+        return movieDetailDao.getMovieDetailWithRelations(movieId = movieId)
+    }
+
+    override suspend fun getMovieDetailExpiredTime(movieId: Int): Long {
+        return movieDetailDao.getMovieDetailCacheTime(movieId = movieId) ?: 0
     }
 }
